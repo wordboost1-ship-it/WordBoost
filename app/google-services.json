@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "217373208793",
+    "project_id": "wordboost-eabd8",
+    "storage_bucket": "wordboost-eabd8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217373208793:android:3cecbce9fe6dcb14f74ec8",
+        "android_client_info": {
+          "package_name": "uk.ac.tees.mad.wordboost"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO13SZUZD_xn8ZIKc5hpRZaW8tlvCJdmQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
