@@ -1,5 +1,6 @@
 package uk.ac.tees.mad.wordboost.data.repository
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
@@ -10,7 +11,6 @@ class AuthRepositoryImpl(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore
 ) {
-
     suspend fun signIn(
         email: String,
         password: String
@@ -48,6 +48,7 @@ class AuthRepositoryImpl(
             }
             Result.success(Unit)
         } catch (e: Exception) {
+            Log.d("Auth" , e.message.toString())
             Result.failure(e)
         }
     }

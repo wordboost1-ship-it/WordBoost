@@ -71,4 +71,7 @@ dependencies {
     //splash screen dependency
     implementation("androidx.core:core-splashscreen:1.0.1")
 
+    //material 3 icon extended
+    implementation("androidx.compose.material:material-icons-extended")
+
 }

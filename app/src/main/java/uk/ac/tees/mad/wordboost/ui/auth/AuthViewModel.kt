@@ -64,8 +64,8 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     fun onPrimaryButtonClick() {
         val state = _authUiState.value
         when (state.authMode) {
-            AuthMode.SIGN_IN -> signUp()
-            AuthMode.SIGN_UP -> signIn()
+            AuthMode.SIGN_IN -> signIn()
+            AuthMode.SIGN_UP -> signUp()
         }
     }
 
@@ -113,8 +113,8 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
             }
             val state = _authUiState.value
             authRepository.signIn(
-                state.email,
-                state.password
+                email = state.email,
+                password = state.password
             )
                 .onSuccess {
                     _authUiState.update {
@@ -128,11 +128,10 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
                     _authUiState.update {
                         it.copy(
                             isLoading = false,
-                            error = AuthErrorMapper.map(Exception(error))
+                            error = AuthErrorMapper.map(error as Exception)
                         )
                     }
                 }
         }
     }
-
 }
