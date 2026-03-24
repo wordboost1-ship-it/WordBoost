@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
@@ -14,7 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import uk.ac.tees.mad.wordboost.ui.home.components.DailyWordHeader
+import uk.ac.tees.mad.wordboost.ui.home.components.HomeTopBar
 import uk.ac.tees.mad.wordboost.ui.home.components.WordCard
 import uk.ac.tees.mad.wordboost.ui.theme.Dimens
 
@@ -22,7 +23,8 @@ import uk.ac.tees.mad.wordboost.ui.theme.Dimens
 @Composable
 fun HomeScreen(
     uiState: DailyWordUiState,
-    onProfileClick:()-> Unit
+    onSettingClick:()-> Unit,
+    onSavedClick:()-> Unit
 ) {
 
     Column(
@@ -30,16 +32,15 @@ fun HomeScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = Dimens.ScreenHorizontalPadding)
+            .statusBarsPadding()
+            .navigationBarsPadding()
     ) {
 
-        DailyWordHeader(
-            greeting = uiState.greeting,
-            userInitial = "A",
-            modifier = Modifier
-                .statusBarsPadding(),
-            onProfileClick = onProfileClick
+        HomeTopBar(
+            onSettingClick = onSettingClick,
+            onSavedClick = onSavedClick,
+            greeting = "good morning"
         )
-
         Spacer(modifier = Modifier.height(Dimens.Large))
 
         Column(
@@ -79,7 +80,8 @@ fun HomeScreenPreview(){
             isSaved = false,
             isLoading = false,
         ),
-        onProfileClick = {}
+        onSettingClick = {},
+        onSavedClick = {}
     )
 }
 

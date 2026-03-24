@@ -6,4 +6,6 @@ sealed class NavRoutes (val route: String) {
 
     object SavedScreen : NavRoutes("saved_screen")
 
+    object SettingScreen : NavRoutes("setting_screen")
+
 }

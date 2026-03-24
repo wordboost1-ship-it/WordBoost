@@ -19,7 +19,7 @@ import uk.ac.tees.mad.wordboost.ui.saved.components.SavedWordTopBar
 import uk.ac.tees.mad.wordboost.ui.theme.Dimens
 
 @Composable
-fun SavedWordScreen(){
+fun SavedWordScreen(onBackClick:()->Unit){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -28,7 +28,10 @@ fun SavedWordScreen(){
             .statusBarsPadding()
             .navigationBarsPadding(),
     ) {
-        SavedWordTopBar(Modifier)
+        SavedWordTopBar(
+            modifier = Modifier,
+            onBackClick = onBackClick
+        )
 
         Spacer(
             modifier = Modifier.height(Dimens.Large)
@@ -57,5 +60,5 @@ fun SavedWordScreen(){
 @Composable
 @Preview(showBackground = true)
 fun SavedWordScreenPreview(){
-    SavedWordScreen()
+    SavedWordScreen(onBackClick = {})
 }

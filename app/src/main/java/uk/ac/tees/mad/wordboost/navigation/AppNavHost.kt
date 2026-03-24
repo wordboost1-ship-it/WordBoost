@@ -8,7 +8,7 @@ import uk.ac.tees.mad.wordboost.ui.auth.AuthScreen
 import uk.ac.tees.mad.wordboost.ui.home.DailyWordUiState
 import uk.ac.tees.mad.wordboost.ui.home.HomeScreen
 import uk.ac.tees.mad.wordboost.ui.saved.SavedWordScreen
-import uk.ac.tees.mad.wordboost.ui.saved.components.SavedWordCard
+import uk.ac.tees.mad.wordboost.ui.setting.SettingScreen
 
 @Composable
 fun AppNavHost(startDestination: NavRoutes ,
@@ -42,14 +42,32 @@ fun AppNavHost(startDestination: NavRoutes ,
                     isSaved = false,
                     isLoading = false
                 ),
-                onProfileClick = {
-
+                onSettingClick = {
+                    navController.navigate(NavRoutes.SettingScreen.route)
+                },
+                onSavedClick = {
+                    navController.navigate(NavRoutes.SavedScreen.route)
                 }
             )
         }
 
         composable(NavRoutes.SavedScreen.route){
-            SavedWordScreen()
+            SavedWordScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
         }
+
+        composable(
+            NavRoutes.SettingScreen.route
+        ){
+            SettingScreen(
+                onBackCLick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
     }
 }

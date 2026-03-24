@@ -19,7 +19,7 @@ import uk.ac.tees.mad.wordboost.ui.setting.components.UserProfileCard
 import uk.ac.tees.mad.wordboost.ui.theme.Dimens
 
 @Composable
-fun SettingScreen() {
+fun SettingScreen(onBackCLick:()-> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -28,7 +28,9 @@ fun SettingScreen() {
                 .statusBarsPadding()
                 .navigationBarsPadding()
         ) {
-            SettingTopBar()
+            SettingTopBar(
+                onBackClick = onBackCLick
+            )
             Spacer(
                 modifier = Modifier.height(Dimens.Small)
             )
@@ -56,6 +58,6 @@ fun SettingScreen() {
 @Composable
 @Preview(showBackground = true)
 fun SettingScreenPreview(){
-    SettingScreen()
+    SettingScreen({})
 }
 

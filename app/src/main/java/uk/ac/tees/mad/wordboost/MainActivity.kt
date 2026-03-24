@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                 .value) {
                 SplashUiState.Loading -> null
                 SplashUiState.NavigateToAuth -> NavRoutes.AuthScreen
-                SplashUiState.NavigateToHome -> NavRoutes.SavedScreen
+                SplashUiState.NavigateToHome -> NavRoutes.HomeScreen
             }
             if(startDestination != null){
                 WordBoostTheme {

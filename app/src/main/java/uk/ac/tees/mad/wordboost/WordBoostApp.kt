@@ -8,6 +8,6 @@ class WordBoostApp : Application() {
     private set
   override fun onCreate() {
     super.onCreate()
-    dependencyContainer = DependencyContainer()
+    dependencyContainer = DependencyContainer(this)
   }
 }

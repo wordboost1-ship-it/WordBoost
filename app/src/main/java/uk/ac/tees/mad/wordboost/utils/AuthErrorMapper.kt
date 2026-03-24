@@ -8,7 +8,6 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 object AuthErrorMapper {
 
     fun map(exception: Exception): AuthError {
-
         return when (exception) {
 
             is FirebaseAuthInvalidUserException ->
