@@ -10,16 +10,25 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import uk.ac.tees.mad.wordboost.ui.saved.components.SavedWordCard
 import uk.ac.tees.mad.wordboost.ui.saved.components.SavedWordTopBar
 import uk.ac.tees.mad.wordboost.ui.theme.Dimens
 
 @Composable
-fun SavedWordScreen(onBackClick:()->Unit){
+fun SavedWordScreen(
+    onBackClick:()->Unit,
+    viewModel: SavedViewModel = viewModel()
+){
+    val uiState by viewModel.savedUiState.collectAsStateWithLifecycle()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -43,13 +52,13 @@ fun SavedWordScreen(onBackClick:()->Unit){
             verticalArrangement = Arrangement.spacedBy(Dimens.Small)
 
         ) {
-            items(10) { it ->
+            items(uiState.list) { it ->
                 SavedWordCard(
-                    word = "Word ${it + 1}",
-                    phonetic = "Phonetic ${it + 1}",
-                    meaningPreview = "Meaning preview ${it + 1}",
-                    onSpeakClick = {},
-                    onDeleteClick = {}
+                    word = it.word,
+                    phonetic = it.phonetic,
+                    meaningPreview = it.meaning,
+                    onSpeakClick = { viewModel.onSpeakerClick(it.audioUrl) },
+                    onDeleteClick = viewModel::onDeleteClick
                 )
             }
         }

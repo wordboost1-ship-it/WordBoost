@@ -30,7 +30,7 @@ fun SavedWordCard(
     phonetic: String,
     meaningPreview: String,
     onSpeakClick: () -> Unit,
-    onDeleteClick: () -> Unit,
+    onDeleteClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -73,7 +73,9 @@ fun SavedWordCard(
 
             ActionColumn(
                 onSpeakClick = onSpeakClick,
-                onDeleteClick = onDeleteClick
+                onDeleteClick = {
+                    onDeleteClick(word)
+                }
             )
         }
     }
@@ -154,7 +156,7 @@ private fun ActionColumn(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        IconButton(onClick = onSpeakClick) {
+        IconButton(onClick = {onSpeakClick()}) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.VolumeUp,
                 contentDescription = "Speak",

@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 @Entity("saved_words")
 data class SavedWordEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val word: String,
-    val phonetic: String,
-    val audioUrl: String,
-    val meaning: String,
-    val example: String?,
+    val word: String = "",
+    val phonetic: String = "",
+    val audioUrl: String = "",
+    val meaning: String = "",
+    val example: String? = null,
 )

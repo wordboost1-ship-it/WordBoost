@@ -71,10 +71,6 @@ fun WordCard(
                 )
             }
         }
-
-        if (isSaved) {
-            SaveSuccessOverlay()
-        }
     }
 }
 
