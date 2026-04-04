@@ -4,17 +4,19 @@ import android.app.Application
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import uk.ac.tees.mad.wordboost.WordBoostApp
+import uk.ac.tees.mad.wordboost.data.repository.WordRepositoryImpl
 import uk.ac.tees.mad.wordboost.notification.ReminderScheduler
 import uk.ac.tees.mad.wordboost.preference.AppPreference
 
 class SettingViewModel (application: Application)
     : AndroidViewModel(application){
-
     private val reminderScheduler : ReminderScheduler =
         (application as WordBoostApp).dependencyContainer.reminderScheduler
 
@@ -23,6 +25,9 @@ class SettingViewModel (application: Application)
 
     private val appPreference : AppPreference =
         (application as WordBoostApp).dependencyContainer.appPreference
+
+    private  val wordRepository : WordRepositoryImpl =
+        (application as WordBoostApp).dependencyContainer.wordRepository
 
 
     private val _settingUiState = MutableStateFlow(SettingUiState())
@@ -53,13 +58,13 @@ class SettingViewModel (application: Application)
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun onReminderToggle(enable : Boolean){
+        appPreference.setDailyReminderEnabled(enable)
         _settingUiState.update {
             it.copy(
-                isReminderEnabled = enable
+                isReminderEnabled = enable,
             )
         }
         //schedule--->>>reminder
-
         if(enable){
             reminderScheduler.enable()
         }else{
@@ -67,14 +72,16 @@ class SettingViewModel (application: Application)
         }
     }
 
-    fun onSignOutClick(onSuccess:()-> Unit){
-        try {
-            firebaseAuth.signOut()
-            reminderScheduler.disable()
-            appPreference.setDailyReminderEnabled(false)
-            onSuccess()
-        }catch (e: Exception){
+    fun onSignOutClick(onSuccess:()-> Unit) {
+        viewModelScope.launch {
+            try {
+                firebaseAuth.signOut()
+                reminderScheduler.disable()
+                appPreference.setDailyReminderEnabled(false)
+                wordRepository.deleteAllData()
+                onSuccess()
+            } catch (e: Exception) {
+            }
         }
     }
-
 }

@@ -1,7 +1,9 @@
 package uk.ac.tees.mad.wordboost.notification
 
 import android.app.Application
+import android.content.Context
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
@@ -11,10 +13,9 @@ import java.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 
 class ReminderScheduler(
-    private val application: Application
+   private val context : Context
 ) {
 
-    private val context = application.applicationContext
     private val workManager = WorkManager.getInstance(context)
 
     private val WORK_NAME = "daily_word_reminder"
@@ -25,6 +26,7 @@ class ReminderScheduler(
     }
 
     fun disable() {
+        Log.d("ReminderScheduler", "disabled")
         workManager.cancelUniqueWork(WORK_NAME)
     }
 
@@ -38,7 +40,7 @@ class ReminderScheduler(
         )
             .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
             .build()
-
+        Log.d("ReminderScheduler", "schedule: $request")
         workManager.enqueueUniquePeriodicWork(
             WORK_NAME,
             ExistingPeriodicWorkPolicy.UPDATE,

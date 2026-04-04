@@ -13,8 +13,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import uk.ac.tees.mad.wordboost.ui.home.components.HomeTopBar
 import uk.ac.tees.mad.wordboost.ui.home.components.WordCard
 import uk.ac.tees.mad.wordboost.ui.theme.Dimens
@@ -22,10 +26,11 @@ import uk.ac.tees.mad.wordboost.ui.theme.Dimens
 
 @Composable
 fun HomeScreen(
-    uiState: DailyWordUiState,
     onSettingClick:()-> Unit,
-    onSavedClick:()-> Unit
+    onSavedClick:()-> Unit,
+    viewModel: HomeViewModel = viewModel()
 ) {
+    val uiState by viewModel.homeUiState.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -51,13 +56,13 @@ fun HomeScreen(
         ) {
 
             WordCard(
-                word = uiState.word,
-                phonetic = uiState.phonetic,
-                meaning = uiState.meaning,
-                example = uiState.example,
-                isSaved = uiState.isSaved,
-                onSpeakClick = {},
-                onSaveClick = {},
+                word = uiState.word.word,
+                phonetic = uiState.word.phonetic,
+                meaning = uiState.word.meaning,
+                example = uiState.word.example?:"no example available",
+                isSaved = uiState.word.isSaved,
+                onSpeakClick = viewModel::onSpeakerClick,
+                onSaveClick = viewModel::onSaveClick,
                 onShareClick = {}
             )
             Spacer(modifier = Modifier.height(Dimens.ExtraLarge))
@@ -71,28 +76,9 @@ fun HomeScreen(
 @Preview(showBackground = true)
 fun HomeScreenPreview(){
     HomeScreen(
-        uiState = DailyWordUiState(
-            greeting = "good morning",
-            word = "wnnsj",
-            phonetic = "bdsbj",
-            meaning = "bdhbjw",
-            example = "bdbhwb",
-            isSaved = false,
-            isLoading = false,
-        ),
+
         onSettingClick = {},
         onSavedClick = {}
     )
 }
 
-
-
-data class DailyWordUiState(
-    val greeting: String,
-    val word: String,
-    val phonetic: String,
-    val meaning: String,
-    val example: String,
-    val isSaved: Boolean,
-    val isLoading: Boolean
-)

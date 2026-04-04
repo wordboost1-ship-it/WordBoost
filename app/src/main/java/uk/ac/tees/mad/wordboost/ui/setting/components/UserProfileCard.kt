@@ -21,7 +21,8 @@ import uk.ac.tees.mad.wordboost.ui.theme.Dimens
 @Composable
 fun UserProfileCard(
     name: String,
-    email: String
+    email: String,
+    firstChar : String,
 ) {
 
     Surface(
@@ -38,7 +39,7 @@ fun UserProfileCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            ProfileAvatar(name = name)
+            ProfileAvatar(name = firstChar)
 
             Spacer(modifier = Modifier.width(Dimens.Medium))
 
@@ -64,7 +65,6 @@ private fun ProfileAvatar(
     name: String
 ) {
 
-    val initial = name.firstOrNull()?.uppercase() ?: "U"
 
     Surface(
         modifier = Modifier.size(56.dp),
@@ -73,7 +73,7 @@ private fun ProfileAvatar(
     ) {
         Box(contentAlignment = Alignment.Center) {
             Text(
-                text = initial,
+                text = name,
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary
             )

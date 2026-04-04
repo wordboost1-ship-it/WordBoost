@@ -29,7 +29,6 @@ import uk.ac.tees.mad.wordboost.ui.theme.Dimens
 fun SettingScreen(onBackCLick:()-> Unit ,
                   onLogoutClick:()-> Unit,
                   viewModel : SettingViewModel = viewModel()) {
-
     val uiState by viewModel.settingUiState.collectAsStateWithLifecycle()
 
         Column(

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import uk.ac.tees.mad.wordboost.WordBoostApp
 import uk.ac.tees.mad.wordboost.data.repository.AuthRepositoryImpl
+import uk.ac.tees.mad.wordboost.data.repository.WordRepositoryImpl
 import uk.ac.tees.mad.wordboost.utils.AuthErrorMapper
 import uk.ac.tees.mad.wordboost.utils.AuthMode
 
@@ -17,6 +18,10 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
     private val authRepository: AuthRepositoryImpl =
         (application as WordBoostApp).dependencyContainer.authRepository
+
+    private val wordRepository : WordRepositoryImpl =
+        (application as WordBoostApp).dependencyContainer.wordRepository
+
     private val _authUiState = MutableStateFlow(AuthUiState())
     val authUiState = _authUiState.asStateFlow()
 
@@ -117,6 +122,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
                 password = state.password
             )
                 .onSuccess {
+                    wordRepository.saveWordFromFirebaseAtFirstInstall()
                     _authUiState.update {
                         it.copy(
                             isLoading = false,

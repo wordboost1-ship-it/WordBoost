@@ -18,9 +18,9 @@ class AppPreference(
 
    //reminder setup
     fun setDailyReminderEnabled(enabled: Boolean) {
-        sharedPreferences.edit()
-            .putBoolean(KEY_DAILY_REMINDER, enabled)
-            .apply()
+        sharedPreferences.edit {
+            putBoolean(KEY_DAILY_REMINDER, enabled)
+        }
     }
     fun isDailyReminderEnabled(): Boolean {
         return sharedPreferences.getBoolean(KEY_DAILY_REMINDER, false)
@@ -28,9 +28,9 @@ class AppPreference(
 
     // ---------- Last Word ----------
     fun setLastWord(word: String) {
-        sharedPreferences.edit()
-            .putString(KEY_LAST_WORD, word)
-            .apply()
+        sharedPreferences.edit {
+            putString(KEY_LAST_WORD, word)
+        }
     }
 
     fun getLastWord(): String? {
