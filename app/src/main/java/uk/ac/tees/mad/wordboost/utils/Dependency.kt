@@ -16,6 +16,7 @@ import uk.ac.tees.mad.wordboost.data.remote.FirebaseDataSource
 import uk.ac.tees.mad.wordboost.data.remote.WordApiService
 import uk.ac.tees.mad.wordboost.data.repository.AuthRepositoryImpl
 import uk.ac.tees.mad.wordboost.data.repository.WordRepositoryImpl
+import uk.ac.tees.mad.wordboost.notification.ReminderScheduler
 import uk.ac.tees.mad.wordboost.preference.AppPreference
 
 class DependencyContainer(private val context : Context) {
@@ -25,7 +26,7 @@ class DependencyContainer(private val context : Context) {
             AppDatabase::class.java,
             AppDatabase.DATABASE_NAME
         )
-            .fallbackToDestructiveMigration() // safe for development
+            .fallbackToDestructiveMigration()
             .build()
     }
 
@@ -95,4 +96,13 @@ class DependencyContainer(private val context : Context) {
             firebaseDataSource = firebaseDataSource,
         )
     }
+
+    val reminderScheduler : ReminderScheduler by lazy {
+        ReminderScheduler(context)
+    }
+
+    val player : AudioPlayer by lazy {
+        AudioPlayer(context)
+    }
+
 }

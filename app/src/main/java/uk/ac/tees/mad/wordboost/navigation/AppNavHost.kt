@@ -1,15 +1,17 @@
 package uk.ac.tees.mad.wordboost.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import uk.ac.tees.mad.wordboost.ui.auth.AuthScreen
-import uk.ac.tees.mad.wordboost.ui.home.DailyWordUiState
 import uk.ac.tees.mad.wordboost.ui.home.HomeScreen
 import uk.ac.tees.mad.wordboost.ui.saved.SavedWordScreen
 import uk.ac.tees.mad.wordboost.ui.setting.SettingScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavHost(startDestination: NavRoutes ,
                navController : NavHostController
@@ -33,15 +35,6 @@ fun AppNavHost(startDestination: NavRoutes ,
         composable(route = NavRoutes.HomeScreen.route){
 
             HomeScreen(
-                uiState = DailyWordUiState(
-                    greeting = "good morning",
-                    word = "wnnsj",
-                    phonetic = "bdsbj",
-                    meaning = "bdhbjw",
-                    example = "bdbhwb",
-                    isSaved = false,
-                    isLoading = false
-                ),
                 onSettingClick = {
                     navController.navigate(NavRoutes.SettingScreen.route)
                 },
@@ -65,9 +58,15 @@ fun AppNavHost(startDestination: NavRoutes ,
             SettingScreen(
                 onBackCLick = {
                     navController.popBackStack()
+                },
+                onLogoutClick = {
+                    navController.navigate(NavRoutes.AuthScreen.route){
+                        popUpTo(NavRoutes.SettingScreen.route){
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }
-
     }
 }

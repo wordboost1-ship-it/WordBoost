@@ -1,11 +1,12 @@
 package uk.ac.tees.mad.wordboost.data.remote
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import uk.ac.tees.mad.wordboost.data.model.SavedWordEntity
 
-const val USER = "user"
+const val USER = "users"
 class FirebaseDataSource (private val firestore: FirebaseFirestore,
                           private val firebaseAuth: FirebaseAuth){
 
@@ -34,6 +35,7 @@ class FirebaseDataSource (private val firestore: FirebaseFirestore,
     }
 
     suspend fun fetchAllWord():List<SavedWordEntity>{
+        Log.d("fetch" , "started fetching")
        return firestore
             .collection(USER)
             .document(getUid()?:"")

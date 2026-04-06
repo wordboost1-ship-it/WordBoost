@@ -41,7 +41,9 @@ fun DailyReminder(
 
             Switch(
                 checked = isEnabled,
-                onCheckedChange = onToggle
+                onCheckedChange = {
+                    onToggle(!isEnabled)
+                }
             )
         }
     }
