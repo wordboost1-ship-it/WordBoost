@@ -26,56 +26,59 @@ import uk.ac.tees.mad.wordboost.ui.theme.Dimens
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun SettingScreen(onBackCLick:()-> Unit ,
-                  onLogoutClick:()-> Unit,
-                  viewModel : SettingViewModel = viewModel()) {
+fun SettingScreen(
+    onBackCLick: () -> Unit,
+    onLogoutClick: () -> Unit,
+    viewModel: SettingViewModel = viewModel()
+) {
     val uiState by viewModel.settingUiState.collectAsStateWithLifecycle()
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background)
-                .padding(Dimens.ScreenHorizontalPadding)
-                .statusBarsPadding()
-                .navigationBarsPadding()
-        ) {
-            SettingTopBar(
-                onBackClick = onBackCLick
-            )
-            Spacer(
-                modifier = Modifier.height(Dimens.Small)
-            )
-            UserProfileCard(
-                name = uiState.name,
-                email = uiState.email,
-                firstChar = uiState.firstCharOfName
-            )
-            Spacer(
-                modifier = Modifier.height(Dimens.Small)
-            )
-            DailyReminder(
-                isEnabled = uiState.isReminderEnabled,
-                onToggle = viewModel::onReminderToggle
-            )
-            Spacer(
-                modifier = Modifier.weight(1f)
-            )
-            SignOutButton(
-                onClick = {
-                    viewModel.onSignOutClick{
-                        onLogoutClick()
-                    }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(Dimens.ScreenHorizontalPadding)
+            .statusBarsPadding()
+            .navigationBarsPadding()
+    ) {
+        SettingTopBar(
+            onBackClick = onBackCLick
+        )
+        Spacer(
+            modifier = Modifier.height(Dimens.Small)
+        )
+        UserProfileCard(
+            name = uiState.name,
+            email = uiState.email,
+            firstChar = uiState.firstCharOfName
+        )
+        Spacer(
+            modifier = Modifier.height(Dimens.Small)
+        )
+        DailyReminder(
+            isEnabled = uiState.isReminderEnabled,
+            onToggle = viewModel::onReminderToggle
+        )
+        Spacer(
+            modifier = Modifier.weight(1f)
+        )
+        SignOutButton(
+            onClick = {
+                viewModel.onSignOutClick {
+                    onLogoutClick()
                 }
-            )
-        }
+            }
+        )
     }
+}
 
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 @Preview(showBackground = true)
-fun SettingScreenPreview(){
-    SettingScreen({},
+fun SettingScreenPreview() {
+    SettingScreen(
+        {},
         {})
 }
 
