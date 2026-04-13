@@ -1,6 +1,7 @@
 package uk.ac.tees.mad.wordboost.ui.saved
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -37,6 +38,9 @@ class SavedViewModel(application: Application)
                  wordRepository
                 .getSavedWord()
                 .collect { word ->
+                    word.forEach {
+                        Log.d("saved", "fetchSavedData: $it")
+                    }
                     _savedUiState.update {
                         it.copy(
                             isLoading = false,

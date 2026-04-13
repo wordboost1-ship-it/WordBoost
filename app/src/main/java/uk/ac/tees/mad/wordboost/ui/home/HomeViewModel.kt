@@ -2,6 +2,7 @@ package uk.ac.tees.mad.wordboost.ui.home
 
 import android.app.Application
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -40,13 +41,16 @@ class HomeViewModel (application: Application)
                     isLoading = true
                 )
             }
-            val result = wordRepository.getWordOfTheDay()
-            _homeUiState.update {
-                it.copy(
-                    isLoading = false,
-                    word = result?:dummyWord
-                )
-            }
+                 wordRepository
+                .getWordOfTheDay()
+                .collect { entity->
+                    _homeUiState.update {
+                        it.copy(
+                            isLoading = false,
+                            word = entity?:dummyWord
+                        )
+                    }
+                }
         }
     }
 
@@ -62,7 +66,7 @@ class HomeViewModel (application: Application)
             }
             _homeUiState.update {
                 it.copy(
-                    isLoading = false
+                    isLoading = false,
                 )
             }
         }

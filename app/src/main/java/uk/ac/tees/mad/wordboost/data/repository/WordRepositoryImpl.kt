@@ -1,6 +1,7 @@
 package uk.ac.tees.mad.wordboost.data.repository
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +20,6 @@ class WordRepositoryImpl (private val apiService: WordApiService,
                           private val wordOfDayDao: WordOfDayDao,
                           private val savedWordDao: SavedWordDao,
                           private val firebaseDataSource: FirebaseDataSource){
-
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun fetchWordOfTheDay() : Result<Unit>  = withContext(Dispatchers.IO){
         return@withContext try {
@@ -54,11 +54,15 @@ class WordRepositoryImpl (private val apiService: WordApiService,
    //saved word screen
     suspend fun deleteWord(word: String) = withContext(Dispatchers.IO){
         savedWordDao.deleteWord(word)
+       wordOfDayDao.updateWordOfDay(
+           word = word,
+           isSaved = false
+       )
        firebaseDataSource.deleteWord(word)
     }
 
     //get word of the day
-    suspend fun  getWordOfTheDay(): WordOfTheDayEntity? = withContext(Dispatchers.IO){
+    suspend fun  getWordOfTheDay(): Flow<WordOfTheDayEntity?> = withContext(Dispatchers.IO){
         return@withContext wordOfDayDao.getWordOfDay()
     }
 

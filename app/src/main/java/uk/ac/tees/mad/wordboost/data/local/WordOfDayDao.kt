@@ -4,12 +4,13 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
 import uk.ac.tees.mad.wordboost.data.model.WordOfTheDayEntity
 
 @Dao
 interface WordOfDayDao{
     @Query("SELECT * FROM word_of_the_entity")
-    suspend fun getWordOfDay():WordOfTheDayEntity?
+     fun getWordOfDay(): Flow<WordOfTheDayEntity?>
 
     @Query("UPDATE word_of_the_entity SET isSaved = :isSaved WHERE word = :word")
     suspend fun updateWordOfDay(word: String, isSaved: Boolean)

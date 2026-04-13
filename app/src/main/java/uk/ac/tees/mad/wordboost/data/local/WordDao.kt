@@ -15,7 +15,7 @@ interface SavedWordDao{
     @Query("Delete FROM saved_words WHERE word = :word")
     suspend fun deleteWord(word: String)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWord(word: SavedWordEntity)
 
     @Query("DELETE FROM saved_words")
