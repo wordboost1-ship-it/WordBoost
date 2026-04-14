@@ -41,6 +41,7 @@ class WordRepositoryImpl (private val apiService: WordApiService,
                     )
                 )
             }
+            Log.d("fetch", "success")
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)

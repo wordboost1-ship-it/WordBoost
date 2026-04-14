@@ -55,7 +55,7 @@ object NotificationHelper {
             context,
             CHANNEL_ID
         )
-            .setSmallIcon(R.drawable.notification)
+            .setSmallIcon(R.drawable.wb_logo)
             .setContentTitle("WordBoost")
             .setContentText("Check today's Word of the Day")
             .setAutoCancel(true)
